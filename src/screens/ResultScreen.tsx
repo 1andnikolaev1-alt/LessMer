@@ -1,15 +1,28 @@
+import { useEffect, useRef } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet, Image,
-  ScrollView, FlatList, Share, Alert,
+  ScrollView, Share, Alert,
 } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../App';
 import type { MeasurementResult, LogMeasurement } from '../utils/gost';
+import { saveMeasurement } from '../utils/database';
+import { exportToPdf } from '../utils/pdf';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Result'>;
 
 export default function ResultScreen({ route, navigation }: Props) {
   const { result } = route.params;
+  const savedRef = useRef(false);
+
+  useEffect(() => {
+    if (!savedRef.current) {
+      savedRef.current = true;
+      saveMeasurement(result).catch(err =>
+        console.error('Failed to save measurement:', err),
+      );
+    }
+  }, [result]);
 
   const shareResult = async () => {
     const groups: Record<number, { count: number; vol: number }> = {};
@@ -42,13 +55,14 @@ export default function ResultScreen({ route, navigation }: Props) {
     }
   };
 
-  const renderLogItem = ({ item }: { item: LogMeasurement }) => (
-    <View style={styles.logItem}>
-      <Text style={styles.logId}>#{item.id}</Text>
-      <Text style={styles.logDiam}>⌀ {item.diameterCm} см</Text>
-      <Text style={styles.logVol}>{item.volumeM3} м³</Text>
-    </View>
-  );
+  const handlePdfExport = async () => {
+    try {
+      await exportToPdf(result);
+    } catch (err) {
+      Alert.alert('Ошибка', 'Не удалось создать PDF');
+      console.error('PDF export error:', err);
+    }
+  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -110,6 +124,9 @@ export default function ResultScreen({ route, navigation }: Props) {
       ))}
 
       <View style={styles.actions}>
+        <TouchableOpacity style={styles.pdfBtn} onPress={handlePdfExport}>
+          <Text style={styles.pdfBtnText}>📄 Экспорт в PDF</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.shareBtn} onPress={shareResult}>
           <Text style={styles.shareBtnText}>Поделиться результатом</Text>
         </TouchableOpacity>
@@ -167,6 +184,10 @@ const styles = StyleSheet.create({
   logDiam: { flex: 1, color: '#C9D1D9', fontSize: 14, fontWeight: '500' },
   logVol: { flex: 1, color: '#3FB950', fontSize: 14, fontWeight: '500', textAlign: 'right' },
   actions: { padding: 16, gap: 12 },
+  pdfBtn: {
+    backgroundColor: '#238636', borderRadius: 12, padding: 16, alignItems: 'center',
+  },
+  pdfBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
   shareBtn: {
     backgroundColor: '#1F6FEB', borderRadius: 12, padding: 16, alignItems: 'center',
   },

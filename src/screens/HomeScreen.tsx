@@ -149,6 +149,13 @@ export default function HomeScreen({ navigation }: Props) {
         >
           <Text style={styles.measureBtnText}>Измерить объём</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.historyBtn}
+          onPress={() => navigation.navigate('History')}
+        >
+          <Text style={styles.historyBtnText}>📋 История замеров</Text>
+        </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -199,4 +206,9 @@ const styles = StyleSheet.create({
   },
   measureBtnDisabled: { backgroundColor: '#21262D', opacity: 0.6 },
   measureBtnText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  historyBtn: {
+    backgroundColor: '#21262D', borderRadius: 12, padding: 14,
+    alignItems: 'center', marginTop: 12, borderWidth: 1, borderColor: '#30363D',
+  },
+  historyBtnText: { color: '#C9D1D9', fontSize: 16, fontWeight: '600' },
 });
