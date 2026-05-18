@@ -48,4 +48,5 @@ export interface MeasurementResult {
   method: string;
   logs: LogMeasurement[];
   timestamp: number;
+  rulerDetected?: boolean;
 }

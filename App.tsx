@@ -5,6 +5,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import ProcessingScreen from './src/screens/ProcessingScreen';
 import ResultScreen from './src/screens/ResultScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
+import GuideScreen from './src/screens/GuideScreen';
 import type { MeasurementResult } from './src/utils/gost';
 
 export type RootStackParamList = {
@@ -18,6 +19,7 @@ export type RootStackParamList = {
     result: MeasurementResult;
   };
   History: undefined;
+  Guide: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -53,6 +55,11 @@ export default function App() {
           name="History"
           component={HistoryScreen}
           options={{ title: 'История замеров' }}
+        />
+        <Stack.Screen
+          name="Guide"
+          component={GuideScreen}
+          options={{ title: 'Инструкция' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

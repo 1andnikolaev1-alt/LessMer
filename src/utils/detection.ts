@@ -29,6 +29,7 @@ interface ApiResponse {
     volume_m3: number;
   }>;
   result_image_base64?: string;
+  ruler_detected?: boolean;
 }
 
 export async function detectLogs(params: DetectionParams): Promise<MeasurementResult> {
@@ -83,6 +84,7 @@ async function detectLogsApi(params: DetectionParams): Promise<MeasurementResult
       volumeM3: l.volume_m3,
     })),
     timestamp: Date.now(),
+    rulerDetected: data.ruler_detected ?? false,
   };
 }
 

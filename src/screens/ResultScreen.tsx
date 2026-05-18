@@ -100,6 +100,23 @@ export default function ResultScreen({ route, navigation }: Props) {
           </View>
         </View>
 
+        {result.rulerDetected === false && (
+          <View style={styles.rulerWarning}>
+            <Text style={styles.rulerWarningText}>
+              ⚠️ Эталон не найден на фото. Результат может быть неточным.
+              Используйте яркую рейку (красную, оранжевую, жёлтую).
+            </Text>
+          </View>
+        )}
+
+        {result.rulerDetected === true && (
+          <View style={styles.rulerOk}>
+            <Text style={styles.rulerOkText}>
+              Эталон найден. Масштаб определён автоматически.
+            </Text>
+          </View>
+        )}
+
         <View style={styles.info}>
           <Text style={styles.infoText}>Эталон: {result.referenceLengthCm} см</Text>
           <Text style={styles.infoText}>Длина брёвен: {result.logLengthM} м</Text>
@@ -167,6 +184,16 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: '#30363D',
   },
   infoText: { color: '#8B949E', fontSize: 13, marginVertical: 2 },
+  rulerWarning: {
+    backgroundColor: '#2D1B00', borderRadius: 8, padding: 12,
+    borderWidth: 1, borderColor: '#F0883E', marginBottom: 12,
+  },
+  rulerWarningText: { color: '#F0883E', fontSize: 13, lineHeight: 18 },
+  rulerOk: {
+    backgroundColor: '#0D2818', borderRadius: 8, padding: 12,
+    borderWidth: 1, borderColor: '#238636', marginBottom: 12,
+  },
+  rulerOkText: { color: '#3FB950', fontSize: 13 },
   sectionTitle: {
     fontSize: 18, fontWeight: '600', color: '#fff', paddingHorizontal: 16, marginTop: 8,
     marginBottom: 8,

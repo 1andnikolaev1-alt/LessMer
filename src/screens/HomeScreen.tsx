@@ -70,6 +70,13 @@ export default function HomeScreen({ navigation }: Props) {
         <Text style={styles.title}>🪵 ЛесМер</Text>
         <Text style={styles.subtitle}>Измерение объёма брёвен по фото</Text>
 
+        <TouchableOpacity
+          style={styles.guideBtn}
+          onPress={() => navigation.navigate('Guide')}
+        >
+          <Text style={styles.guideBtnText}>📖 Как использовать эталон — инструкция</Text>
+        </TouchableOpacity>
+
         {imageUri ? (
           <TouchableOpacity onPress={pickImage} style={styles.imageWrap}>
             <Image source={{ uri: imageUri }} style={styles.image} />
@@ -95,7 +102,10 @@ export default function HomeScreen({ navigation }: Props) {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Длина эталона (см)</Text>
-          <Text style={styles.hint}>Укажите длину линейки на фото</Text>
+          <Text style={styles.hint}>
+            Прикрепите яркую рейку/линейку к штабелю и укажите её длину.
+            Используйте красный, оранжевый, жёлтый или зелёный цвет.
+          </Text>
           <View style={styles.inputRow}>
             {['10', '30', '50', '100'].map(v => (
               <TouchableOpacity
@@ -211,4 +221,9 @@ const styles = StyleSheet.create({
     alignItems: 'center', marginTop: 12, borderWidth: 1, borderColor: '#30363D',
   },
   historyBtnText: { color: '#C9D1D9', fontSize: 16, fontWeight: '600' },
+  guideBtn: {
+    backgroundColor: '#1C2128', borderRadius: 10, padding: 12,
+    alignItems: 'center', marginBottom: 16, borderWidth: 1, borderColor: '#F0883E',
+  },
+  guideBtnText: { color: '#F0883E', fontSize: 14, fontWeight: '600' },
 });
