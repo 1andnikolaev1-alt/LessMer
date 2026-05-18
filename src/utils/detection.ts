@@ -9,7 +9,7 @@
 
 import { volumeGost, MeasurementResult, LogMeasurement } from './gost';
 
-const API_URL = 'https://user:589c96a0101bea75732373e191a5181e@8ccbeb76f1a2-tunnel-dhloqepr.devinapps.com';
+const API_URL = 'http://5.129.233.22:8000';
 
 export interface DetectionParams {
   imageUri: string;
