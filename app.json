@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ЛесМер",
+    "owner": "lessmer-app",
     "slug": "LessMer",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -28,7 +29,9 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "permissions": [
-        "CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -48,6 +51,11 @@
         }
       ],
       "expo-sharing"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ed9aaee1-d71c-4bbf-8e1b-0ac0fcafb307"
+      }
+    }
   }
 }
